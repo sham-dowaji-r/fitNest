@@ -64,6 +64,8 @@ export default function ExerciseForm({
   const [muscleGroups, setMuscleGroups] = useState(
     initialData?.muscleGroups || []
   );
+  const [sets, setSets] = useState(3);
+  const [reps, setReps] = useState(10);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -75,6 +77,8 @@ export default function ExerciseForm({
         .map((s) => s.trim())
         .filter(Boolean),
       muscleGroups,
+      sets,
+      reps,
     });
   };
 
@@ -85,6 +89,23 @@ export default function ExerciseForm({
 
       <Label>Image</Label>
       <Input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
+      <Label>sets:</Label>
+      <input
+        type="number"
+        min="1"
+        max="10"
+        value={sets}
+        onChange={(e) => setSets(parseInt(e.target.value))}
+      />
+
+      <Label>reps:</Label>
+      <input
+        type="number"
+        min="1"
+        max="100"
+        value={reps}
+        onChange={(e) => setReps(parseInt(e.target.value))}
+      />
 
       <Label>Instructions</Label>
       <TextArea

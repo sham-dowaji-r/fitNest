@@ -51,6 +51,7 @@ export async function getServerSideProps(context) {
   const workout = await Workout.findById(id)
     .populate("exercises.exerciseId")
     .lean();
+  console.log("📦 التمارين:", workout.exercises);
 
   if (!workout) {
     return {
@@ -61,15 +62,18 @@ export async function getServerSideProps(context) {
   const serialized = {
     ...workout,
     _id: workout._id.toString(),
-    exercises: workout.exercises.map((ex) => ({
-      ...ex,
-      exerciseId: {
-        ...ex.exerciseId,
-        _id: ex.exerciseId._id.toString(),
-        muscleGroups:
-          ex.exerciseId.muscleGroups?.map((m) => m.toString()) || [],
-      },
-    })),
+    exercises: workout.exercises
+      .filter((ex) => ex.exerciseId !== null)
+      .map((ex) => ({
+        ...ex,
+        _id: ex._id?.toString() || null,
+        exerciseId: {
+          ...ex.exerciseId,
+          _id: ex.exerciseId._id.toString(),
+          muscleGroups:
+            ex.exerciseId.muscleGroups?.map((mg) => mg.toString()) || [],
+        },
+      })),
   };
 
   return {

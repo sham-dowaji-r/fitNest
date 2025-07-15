@@ -6,12 +6,12 @@ export default async function handler(req, res) {
   await dbConnect();
 
   if (req.method === "GET") {
-    const exercises = await Exercis.find().populate("muscleGroups").lean();
+    const exercises = await Exercise.find().populate("muscleGroups").lean();
     return res.status(200).json(exercises);
   }
   if (req.method === "POST") {
     const { name, imageUrl, instructions, muscleGroups } = req.body;
-    const exercise = await Exercis.create({
+    const exercise = await Exercise.create({
       name,
       imageUrl,
       instructions,

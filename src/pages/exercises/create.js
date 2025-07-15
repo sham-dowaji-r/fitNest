@@ -21,8 +21,8 @@ export default function CreateExercise({ muscleOptions }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           exerciseId: newExercise._id,
-          sets: 3,
-          reps: 10,
+          sets: data.sets,
+          reps: data.reps,
         }),
       });
 
@@ -36,7 +36,6 @@ export default function CreateExercise({ muscleOptions }) {
 }
 
 export async function getServerSideProps() {
-  // اتصل بقاعدة البيانات مباشرة
   await dbConnect();
   const muscles = await MuscleGroup.find().lean();
   const muscleOptions = muscles.map((m) => ({
