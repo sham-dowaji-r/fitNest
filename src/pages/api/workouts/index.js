@@ -1,5 +1,6 @@
-import dbConnect from "../../../../lib/mongodb";
-import Workout from "../../../../models/Workout";
+import dbConnect from "@/lib/mongodb";
+import Workout from "@/models/Workout";
+
 import Exercise from "../../../../models/Exercise";
 
 export default async function handler(req, res) {

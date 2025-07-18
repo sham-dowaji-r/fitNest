@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const WorkoutSchema = new mongoose.Schema({
   name: String,
+  slug: { type: String, required: true, unique: true },
   imageUrl: String,
   exercises: [
     {
@@ -15,6 +16,13 @@ const WorkoutSchema = new mongoose.Schema({
   ],
 });
 
-// ✅ استخدم اسم collection صريح "worksout"
+// توليد slug تلقائي من الاسم
+WorkoutSchema.pre("save", function (next) {
+  if (!this.slug && this.name) {
+    this.slug = this.name.toLowerCase().replace(/\s+/g, "-");
+  }
+  next();
+});
+
 export default mongoose.models.Workout ||
   mongoose.model("Workout", WorkoutSchema, "worksout");

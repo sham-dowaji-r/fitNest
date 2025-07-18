@@ -30,7 +30,7 @@ const CardTitle = styled.h2`
 
 export default function WorkoutCard({ workout }) {
   return (
-    <Link href={`/workout/${encodeURIComponent(workout.name)}`} passHref>
+    <Link href={`/workouts/${workout._id}`}>
       <Card>
         <Image
           src={
